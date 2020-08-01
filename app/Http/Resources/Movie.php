@@ -30,6 +30,7 @@ class Movie extends JsonResource
                     'vote_average' => $this->vote_average,
                     'overview' => $this->overview,
                     'release_date' => $this->release_date,
+                    'genres' => $this->genres
                 ]
             ],
             'links' => [

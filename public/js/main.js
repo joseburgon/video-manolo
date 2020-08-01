@@ -1953,8 +1953,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  name: "MovieCard"
+  name: "MovieCard",
+  data: function data() {
+    return {
+      genres: ""
+    };
+  },
+  props: ["movie"],
+  mounted: function mounted() {
+    var _this = this;
+
+    this.movie.data.attributes.genres.forEach(function (genre) {
+      if (_this.genres === "") {
+        _this.genres += genre.name;
+      } else {
+        _this.genres += ", " + genre.name;
+      }
+    });
+  }
 });
 
 /***/ }),
@@ -2024,11 +2059,27 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   name: "Home",
   components: {
     MovieCard: _components_MovieCard__WEBPACK_IMPORTED_MODULE_0__["default"]
+  },
+  data: function data() {
+    return {
+      movies: ''
+    };
+  },
+  mounted: function mounted() {
+    var _this = this;
+
+    axios.get('/api/movies').then(function (res) {
+      _this.movies = res.data;
+    })["catch"](function (error) {
+      console.log('Unable to fetch movies.');
+    });
   }
 });
 
@@ -37665,7 +37716,7 @@ var render = function() {
           staticClass: "text-lg mt-2 hover:text-gray-300",
           attrs: { href: "#" }
         },
-        [_vm._v("Dark Waters")]
+        [_vm._v(_vm._s(_vm.movie.data.attributes.title))]
       ),
       _vm._v(" "),
       _c(
@@ -37691,16 +37742,18 @@ var render = function() {
             ]
           ),
           _vm._v(" "),
-          _c("span", { staticClass: "ml-1" }, [_vm._v("75%")]),
+          _c("span", { staticClass: "ml-1" }, [
+            _vm._v(_vm._s(_vm.movie.data.attributes.vote_average))
+          ]),
           _vm._v(" "),
           _c("span", { staticClass: "mx-2" }, [_vm._v("|")]),
           _vm._v(" "),
-          _c("span", [_vm._v("Sep 19, 2019")])
+          _c("span", [_vm._v(_vm._s(_vm.movie.data.attributes.release_date))])
         ]
       ),
       _vm._v(" "),
       _c("div", { staticClass: "text-gray-400 text-sm" }, [
-        _vm._v("Action, Drama, Thriller")
+        _vm._v(_vm._s(_vm.genres))
       ])
     ])
   ])
@@ -37895,7 +37948,7 @@ var render = function() {
           staticClass:
             "uppercase tracking-wider text-orange-500 text-lg font-semibold"
         },
-        [_vm._v("Películas Populares")]
+        [_vm._v("Películas Mejor Punteadas")]
       ),
       _vm._v(" "),
       _c(
@@ -37904,7 +37957,12 @@ var render = function() {
           staticClass:
             "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8"
         },
-        [_c("movie-card")],
+        _vm._l(_vm.movies.data, function(movie) {
+          return _c("movie-card", {
+            key: movie.data.movie_id,
+            attrs: { movie: movie }
+          })
+        }),
         1
       )
     ])

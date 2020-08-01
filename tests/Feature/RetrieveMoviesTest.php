@@ -16,7 +16,9 @@ class RetrieveMoviesTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $movies = factory(Movie::class, 2)->create();
+        $movies = factory(Movie::class, 2)->create()->each(function (Movie $movie) {
+            $movie->genres()->attach([12, 14]);
+        });
 
         $response = $this->get('/api/movies');
 
@@ -39,6 +41,7 @@ class RetrieveMoviesTest extends TestCase
                                 'vote_average' => $movies->first()->vote_average,
                                 'overview' => $movies->first()->overview,
                                 'release_date' => $movies->first()->release_date,
+                                'genres' => $movies->first()->genres->first(),
                             ]
                         ]
                     ],
@@ -58,6 +61,7 @@ class RetrieveMoviesTest extends TestCase
                                 'vote_average' => $movies->last()->vote_average,
                                 'overview' => $movies->last()->overview,
                                 'release_date' => $movies->last()->release_date,
+                                'genres' => $movies->first()->genres->first(),
                             ]
                         ]
                     ]
