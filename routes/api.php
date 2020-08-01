@@ -9,9 +9,12 @@ Route::middleware('auth:api')->group(function () {
         return $request->user();
     });
 
-    Route::get('/reservations', 'ReservationController@index');
-    Route::post('/reservations', 'ReservationController@store');
+    Route::apiResources([
+        'reservations' => 'ReservationController',
+    ]);
 
 });
 
-Route::get('/movies', 'MovieController@index');
+Route::apiResources([
+    'movies' => 'MovieController',
+]);

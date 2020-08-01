@@ -1,16 +1,16 @@
 <template>
     <div class="mt-8">
-        <a href="#">
+        <router-link :to="{ name: 'movie', params: { id: movie.data.movie_id }}">
             <img
-                :src="'/img/poster.jpg'"
+                :src="imgUrl"
                 alt="poster"
                 class="hover:opacity-75 transition ease-in-out duration-150"
             />
-        </a>
+        </router-link>
         <div class="mt-2">
-            <a href="#" class="text-lg mt-2 hover:text-gray-300">{{
-                movie.data.attributes.title
-            }}</a>
+            <router-link :to="{ name: 'movie', params: { id: movie.data.movie_id }}" class="text-lg mt-2 hover:text-gray-300">
+                {{ movie.data.attributes.title }}
+            </router-link>
             <div class="flex items-center text-gray-400 text-sm mt-1">
                 <svg
                     class="fill-current text-orange-500 w-4"
@@ -23,9 +23,9 @@
                         />
                     </g>
                 </svg>
-                <span class="ml-1">{{
-                    movie.data.attributes.vote_average
-                }}</span>
+                <span class="ml-1">
+                    {{ movie.data.attributes.vote_average }}
+                </span>
                 <span class="mx-2">|</span>
                 <span>{{ movie.data.attributes.release_date }}</span>
             </div>
@@ -40,13 +40,17 @@ export default {
 
     data: () => {
         return {
-            genres: ""
+            genres: '',
+            imgUrl: 'https://image.tmdb.org/t/p/w500',
         };
     },
 
     props: ["movie"],
 
     mounted() {
+        
+        this.imgUrl += this.movie.data.attributes.poster_path;
+
         this.movie.data.attributes.genres.forEach(genre => {
             if (this.genres === "") {
                 this.genres += genre.name;

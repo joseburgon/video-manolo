@@ -12,7 +12,7 @@ class RetrieveMoviesTest extends TestCase
     use RefreshDatabase;
 
     /** @test */
-    public function a_user_can_retrieve_movies()
+    public function app_retrieve_movies_list()
     {
         $this->withoutExceptionHandling();
 
@@ -68,6 +68,39 @@ class RetrieveMoviesTest extends TestCase
                 ],
                 'links' => [
                     'self' => url('/movies'),
+                ]
+            ]);
+    }
+
+    /** @test */
+    public function app_retrieve_a_single_movie()
+    {
+        $this->withoutExceptionHandling();
+
+        $movie = factory(Movie::class)->create();
+        $movie->genres()->attach([12, 14]);
+
+        $response = $this->get(route('movies.show', $movie->id));
+
+        $response->assertStatus(200)
+            ->assertJson([
+                'data' => [
+                    'type' => 'movies',
+                    'movie_id' => $movie->id,
+                    'attributes' => [
+                        'popularity' => $movie->popularity,
+                        'vote_count' => $movie->vote_count,
+                        'poster_path' => $movie->poster_path,
+                        'adult' => $movie->adult,
+                        'backdrop_path' => $movie->backdrop_path,
+                        'original_language' => $movie->original_language,
+                        'original_title' => $movie->original_title,
+                        'title' => $movie->title,
+                        'vote_average' => $movie->vote_average,
+                        'overview' => $movie->overview,
+                        'release_date' => $movie->release_date,
+                        'genres' => $movie->genres->first(),
+                    ]
                 ]
             ]);
     }
