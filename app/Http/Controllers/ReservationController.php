@@ -18,6 +18,7 @@ class ReservationController extends Controller
     {
         $data = request()->validate([
             'data.attributes.movie_id' => '',
+            'data.attributes.return_date' => 'required|date',
         ]);
 
         $reservation = request()->user()->reservations()->create($data['data']['attributes']);

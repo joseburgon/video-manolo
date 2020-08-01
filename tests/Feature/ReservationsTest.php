@@ -22,7 +22,8 @@ class ReservationsTest extends TestCase
             'data' => [
                 'type' => 'reservations',
                 'attributes' => [
-                    'movie_id' => 1
+                    'movie_id' => 1,
+                    'return_date' => '2020-08-15'
                 ]
             ]
         ]);

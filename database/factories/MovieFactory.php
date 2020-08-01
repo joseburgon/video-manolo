@@ -7,6 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Movie::class, function (Faker $faker) {
     return [
-        'name' => $faker->word,
+        'title' => $faker->word,
+        'overview' => $faker->sentence(5),
     ];
 });
