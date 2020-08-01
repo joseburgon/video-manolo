@@ -22,11 +22,11 @@ class Reservation extends JsonResource
                 'attributes' => [
                     'reserved_by' => new UserResource($this->user),
                     'movie_id' => $this->movie_id,
-                    ]
-                ],
-                'links' => [
-                    'self' => url('/reservations/' . $this->id),
                 ]
+            ],
+            'links' => [
+                'self' => url('/reservations/' . $this->id),
+            ]
         ];
     }
 }

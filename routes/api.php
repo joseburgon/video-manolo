@@ -13,3 +13,5 @@ Route::middleware('auth:api')->group(function () {
     Route::post('/reservations', 'ReservationController@store');
 
 });
+
+Route::get('/movies', 'MovieController@index');
