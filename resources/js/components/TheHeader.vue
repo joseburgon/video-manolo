@@ -14,6 +14,7 @@
                 </li>
             </ul>
             <div class="flex flex-col md:flex-row items-center">
+                <a class="nav-item nav-link" v-if="isLoggedIn" @click.prevent="logout" href="#">Logout</a>
                 <div class="md:ml-4 mt-3 md:mt-0">
                     <a href="#">
                         <img :src="'/img/avatar.jpg'" alt="avatar" class="rounded-full w-8 h-8">
@@ -25,11 +26,29 @@
 </template>
 
 <script>
+import User from "../apis/User";
+import { mapGetters } from "vuex";
+
 export default {
     name: 'TheHeader',
+
     data() {
         return {};
     },
+
+    computed: {
+        ...mapGetters(["isLoggedIn"])
+    },
+
+    methods: {
+        logout() {
+            User.logout().then(() => {
+                localStorage.removeItem("token");
+                this.$store.commit("LOGIN", false);
+                this.$router.push({ name: "Home" });
+            });
+        }
+    }
 }
 </script>
 

@@ -3,6 +3,7 @@
 namespace Tests\Feature;
 
 use App\Movie;
+use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -15,6 +16,8 @@ class RetrieveMoviesTest extends TestCase
     public function app_retrieve_movies_list()
     {
         $this->withoutExceptionHandling();
+
+        $this->actingAs($user = factory(User::class)->create(), 'api');
 
         $movies = factory(Movie::class, 2)->create()->each(function (Movie $movie) {
             $movie->genres()->attach([12, 14]);
@@ -41,6 +44,7 @@ class RetrieveMoviesTest extends TestCase
                                 'vote_average' => $movies->first()->vote_average,
                                 'overview' => $movies->first()->overview,
                                 'release_date' => $movies->first()->release_date,
+                                'stock' => $movies->first()->stock,
                                 'genres' => $movies->first()->genres->first(),
                             ]
                         ]
@@ -61,6 +65,7 @@ class RetrieveMoviesTest extends TestCase
                                 'vote_average' => $movies->last()->vote_average,
                                 'overview' => $movies->last()->overview,
                                 'release_date' => $movies->last()->release_date,
+                                'stock' => $movies->last()->stock,
                                 'genres' => $movies->first()->genres->first(),
                             ]
                         ]
@@ -76,6 +81,8 @@ class RetrieveMoviesTest extends TestCase
     public function app_retrieve_a_single_movie()
     {
         $this->withoutExceptionHandling();
+
+        $this->actingAs($user = factory(User::class)->create(), 'api');
 
         $movie = factory(Movie::class)->create();
         $movie->genres()->attach([12, 14]);
@@ -99,6 +106,7 @@ class RetrieveMoviesTest extends TestCase
                         'vote_average' => $movie->vote_average,
                         'overview' => $movie->overview,
                         'release_date' => $movie->release_date,
+                        'stock' => $movie->stock,
                         'genres' => $movie->genres->first(),
                     ]
                 ]

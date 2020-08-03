@@ -27,6 +27,7 @@ class CreateMoviesTable extends Migration
             $table->bigInteger('popularity')->nullable();
             $table->bigInteger('vote_count')->nullable();
             $table->float('vote_average')->nullable();
+            $table->integer('stock')->default(1);
 
             $table->timestamps();
         });

@@ -41,7 +41,7 @@ export default {
     data: () => {
         return {
             genres: '',
-            imgUrl: 'https://image.tmdb.org/t/p/w500',
+            imgUrl: '',
         };
     },
 
@@ -49,7 +49,9 @@ export default {
 
     mounted() {
         
-        this.imgUrl += this.movie.data.attributes.poster_path;
+        this.imgUrl += 
+            'https://image.tmdb.org/t/p/w500' +
+            this.movie.data.attributes.poster_path;
 
         this.movie.data.attributes.genres.forEach(genre => {
             if (this.genres === "") {

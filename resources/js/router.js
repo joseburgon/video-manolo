@@ -1,19 +1,78 @@
 import Vue from 'vue';
 import VueRouter from 'vue-router';
 import Home from './views/Home';
+import Register from './views/Register';
+import Login from './views/Login';
 import Movie from './views/Movie';
+import User from './views/User';
 
 Vue.use(VueRouter);
 
-export default new VueRouter({
-    mode: 'history',
+const routes = [
+    {
+        path: "/",
+        name: "home",
+        component: Home
+    },
+    {
+        path: "/login",
+        name: "login",
+        component: Login,
+        meta: { guestOnly: true }
+    },
+    {
+        path: "/register",
+        name: "register",
+        component: Register,
+        meta: { guestOnly: true }
+    },
+    {
+        path: "/movies/:id",
+        name: "movie",
+        component: Movie,
+    },
+    {
+        path: "/users/:id",
+        name: "user",
+        component: User,
+    },
+];
 
-    routes: [
-        {
-            path: '/', name: 'home', component: Home,
-        },
-        {
-            path: '/movie/:id', name: 'movie', component: Movie,
-        }
-    ]
+const router = new VueRouter({
+    mode: "history",
+    routes
 });
+
+function isLoggedIn() {
+    return localStorage.getItem("token");
+}
+
+router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.authOnly)) {
+        // this route requires auth, check if logged in
+        // if not, redirect to login page.
+        if (!isLoggedIn()) {
+            next({
+                path: "/login",
+                query: { redirect: to.fullPath }
+            });
+        } else {
+            next();
+        }
+    } else if (to.matched.some(record => record.meta.guestOnly)) {
+        // this route requires auth, check if logged in
+        // if not, redirect to login page.
+        if (isLoggedIn()) {
+            next({
+                path: "/",
+                query: { redirect: to.fullPath }
+            });
+        } else {
+            next();
+        }
+    } else {
+        next(); // make sure to always call next()!
+    }
+});
+
+export default router;

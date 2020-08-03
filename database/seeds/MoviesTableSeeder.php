@@ -39,6 +39,7 @@ class MoviesTableSeeder extends Seeder
                 'vote_average' => $movie['vote_average'],
                 'overview' => $movie['overview'],
                 'release_date' => $movie['release_date'],
+                'stock' => rand(0, 5),
             ]);
             
             $newMovie->genres()->attach($movie['genre_ids']);
