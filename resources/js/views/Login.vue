@@ -12,15 +12,15 @@
         <div class="w-full xl:w-1/2 p-8">
             <form method="post" action="#" @submit="login">
                 <h1 class="text-gray-900 text-2xl font-bold">
-                    Sign in to your account
+                    Iniciar sesión en su cuenta
                 </h1>
                 <div>
                     <span class="text-gray-600 text-sm">
-                        Don't have an account?
+                        ¿No tienes una cuenta?
                     </span>
 
                     <router-link :to="{ name: 'register' }">
-                        <span class="text-gray-700 text-sm font-semibold">Sign Up</span>
+                        <span class="text-gray-700 text-sm font-semibold">Regístrate</span>
                     </router-link>
                 </div>
                 <div class="mb-4 mt-6">
@@ -43,7 +43,7 @@
                         class="block text-gray-700 text-sm font-semibold mb-2"
                         for="password"
                     >
-                        Password
+                        Contraseña
                     </label>
                     <input
                         class="text-sm bg-gray-200 appearance-none rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline h-10"
@@ -59,7 +59,7 @@
                         type="submit"
                         @click.prevent="login"
                     >
-                        Sign in
+                        Iniciar Sesión
                     </button>
                 </div>
             </form>
@@ -74,7 +74,7 @@ export default {
     data() {
         return {
             form: {
-                email: "",
+                email: this.$route.query.email ?? "",
                 password: "",
             },
             errors: [],

@@ -2253,9 +2253,11 @@ __webpack_require__.r(__webpack_exports__);
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
+    var _this$$route$query$em;
+
     return {
       form: {
-        email: "",
+        email: (_this$$route$query$em = this.$route.query.email) !== null && _this$$route$query$em !== void 0 ? _this$$route$query$em : "",
         password: ""
       },
       errors: []
@@ -2464,8 +2466,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -2485,7 +2485,10 @@ __webpack_require__.r(__webpack_exports__);
 
       _apis_User__WEBPACK_IMPORTED_MODULE_0__["default"].register(this.form).then(function () {
         _this.$router.push({
-          name: "login"
+          name: "login",
+          query: {
+            email: _this.form.email
+          }
         });
       })["catch"](function (error) {
         if (error.response.status === 422) {
@@ -38394,7 +38397,7 @@ var render = function() {
                 "a",
                 {
                   staticClass:
-                    "bg-indigo-700 hover:bg-indigo-500 text-white ml-4 py-2 px-3 rounded-lg",
+                    "bg-orange-500 text-gray-900 hover:bg-orange-600 rounded font-semibold ml-4 py-2 px-3",
                   attrs: { href: "#" },
                   on: {
                     click: function($event) {
@@ -38506,7 +38509,9 @@ var render = function() {
           { attrs: { method: "post", action: "#" }, on: { submit: _vm.login } },
           [
             _c("h1", { staticClass: "text-gray-900 text-2xl font-bold" }, [
-              _vm._v("\n                Sign in to your account\n            ")
+              _vm._v(
+                "\n                Iniciar sesión en su cuenta\n            "
+              )
             ]),
             _vm._v(" "),
             _c(
@@ -38514,7 +38519,7 @@ var render = function() {
               [
                 _c("span", { staticClass: "text-gray-600 text-sm" }, [
                   _vm._v(
-                    "\n                    Don't have an account?\n                "
+                    "\n                    ¿No tienes una cuenta?\n                "
                   )
                 ]),
                 _vm._v(" "),
@@ -38522,7 +38527,7 @@ var render = function() {
                   _c(
                     "span",
                     { staticClass: "text-gray-700 text-sm font-semibold" },
-                    [_vm._v("Sign Up")]
+                    [_vm._v("Regístrate")]
                   )
                 ])
               ],
@@ -38574,7 +38579,7 @@ var render = function() {
                   staticClass: "block text-gray-700 text-sm font-semibold mb-2",
                   attrs: { for: "password" }
                 },
-                [_vm._v("\n                    Password\n                ")]
+                [_vm._v("\n                    Contraseña\n                ")]
               ),
               _vm._v(" "),
               _c("input", {
@@ -38619,7 +38624,11 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("\n                    Sign in\n                ")]
+                [
+                  _vm._v(
+                    "\n                    Iniciar Sesión\n                "
+                  )
+                ]
               )
             ])
           ]
@@ -38856,8 +38865,8 @@ var render = function() {
               _c("form", { staticClass: "mt-8" }, [
                 _c("div", { staticClass: "mx-auto max-w-lg " }, [
                   _c("div", { staticClass: "py-1" }, [
-                    _c("span", { staticClass: "px-1 text-sm text-gray-600" }, [
-                      _vm._v("Name")
+                    _c("span", { staticClass: "px-1 text-sm" }, [
+                      _vm._v("Nombre")
                     ]),
                     _vm._v(" "),
                     _c("input", {
@@ -38885,7 +38894,7 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "py-1" }, [
-                    _c("span", { staticClass: "px-1 text-sm text-gray-600" }, [
+                    _c("span", { staticClass: "px-1 text-sm" }, [
                       _vm._v("Email")
                     ]),
                     _vm._v(" "),
@@ -38914,8 +38923,8 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "py-1" }, [
-                    _c("span", { staticClass: "px-1 text-sm text-gray-600" }, [
-                      _vm._v("Password")
+                    _c("span", { staticClass: "px-1 text-sm" }, [
+                      _vm._v("Contraseña")
                     ]),
                     _vm._v(" "),
                     _c("input", {
@@ -38943,8 +38952,8 @@ var render = function() {
                   ]),
                   _vm._v(" "),
                   _c("div", { staticClass: "py-1" }, [
-                    _c("span", { staticClass: "px-1 text-sm text-gray-600" }, [
-                      _vm._v("Password Confirm")
+                    _c("span", { staticClass: "px-1 text-sm" }, [
+                      _vm._v("Confirmar Contraseña")
                     ]),
                     _vm._v(" "),
                     _c("input", {
@@ -38989,7 +38998,7 @@ var render = function() {
                     },
                     [
                       _vm._v(
-                        "\n                                Register\n                            "
+                        "\n                                Registrarme\n                            "
                       )
                     ]
                   )
@@ -39025,10 +39034,10 @@ var staticRenderFns = [
           },
           [
             _vm._v(
-              "You're\n                            already member?\n                            "
+              "\n                            ¿Ya eres miembro?\n                            "
             ),
             _c("span", { staticClass: "text-black font-semibold" }, [
-              _vm._v("\n        Login\n      ")
+              _vm._v("Login")
             ])
           ]
         )

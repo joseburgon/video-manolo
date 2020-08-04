@@ -44,7 +44,7 @@
                     </a>
                 </div>
                 <a
-                    class="bg-indigo-700 hover:bg-indigo-500 text-white ml-4 py-2 px-3 rounded-lg"
+                    class="bg-orange-500 text-gray-900 hover:bg-orange-600 rounded font-semibold ml-4 py-2 px-3"
                     v-if="isLoggedIn" @click.prevent="logout" href="#"
                 >
                     Logout
