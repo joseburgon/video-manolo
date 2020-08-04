@@ -7,6 +7,10 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
 
+/**
+ * @method static where(string $string, $email)
+ * @method static create(array $array)
+ */
 class User extends Authenticatable
 {
     use Notifiable, HasApiTokens;

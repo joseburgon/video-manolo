@@ -12,7 +12,7 @@ const app = new Vue({
         App
     },
 
-    router,
-    
     store,
+
+    router,
 });

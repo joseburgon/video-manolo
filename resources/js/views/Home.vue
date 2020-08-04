@@ -33,18 +33,8 @@ export default {
       }
     },
 
-    methods: {
-        logout() {
-            User.logout().then(() => {
-                localStorage.removeItem("token");
-                this.$store.commit("LOGIN", false);
-                this.$router.push({ name: "Home" });
-            });
-        }
-    },
-
     created() {
-      Movies.getMovies()
+      Movies.getAll()
         .then(res => {
           this.movies = res.data
         })

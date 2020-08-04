@@ -9,6 +9,10 @@
 
 export default {
     name: "App",
+
+    mounted() {
+        this.$store.commit("LOGIN", !!localStorage.getItem("token"));
+    }
 }
 </script>
 

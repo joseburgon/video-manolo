@@ -10,20 +10,23 @@
             />
         </div>
         <div class="w-full xl:w-1/2 p-8">
-            <form method="post" action="#" onSubmit="return false">
-                <h1 class="text-gray-900 text-2xl font-bold">Sign in to your account</h1>
+            <form method="post" action="#" @submit="login">
+                <h1 class="text-gray-900 text-2xl font-bold">
+                    Sign in to your account
+                </h1>
                 <div>
-        <span class="text-gray-600 text-sm">
-          Don't have an account?
-        </span>
-                    <span class="text-gray-700 text-sm font-semibold">
-          Sign up
-        </span>
+                    <span class="text-gray-600 text-sm">
+                        Don't have an account?
+                    </span>
+
+                    <router-link :to="{ name: 'register' }">
+                        <span class="text-gray-700 text-sm font-semibold">Sign Up</span>
+                    </router-link>
                 </div>
                 <div class="mb-4 mt-6">
                     <label
                         class="block text-gray-700 text-sm font-semibold mb-2"
-                        htmlFor="email"
+                        for="email"
                     >
                         Email
                     </label>
@@ -38,7 +41,7 @@
                 <div class="mb-6 mt-6">
                     <label
                         class="block text-gray-700 text-sm font-semibold mb-2"
-                        htmlFor="password"
+                        for="password"
                     >
                         Password
                     </label>
@@ -49,17 +52,11 @@
                         placeholder="Your password"
                         v-model="form.password"
                     />
-                    <a
-                        class="inline-block align-baseline text-sm text-gray-600 hover:text-gray-800"
-                        href="/forgot"
-                    >
-                        Forgot Password?
-                    </a>
                 </div>
                 <div class="flex w-full mt-8">
                     <button
                         class="w-full bg-orange-500 text-gray-900 hover:bg-orange-600 text-sm py-2 px-4 font-semibold rounded focus:outline-none focus:shadow-outline h-10"
-                        type="button"
+                        type="submit"
                         @click.prevent="login"
                     >
                         Sign in
@@ -78,30 +75,28 @@ export default {
         return {
             form: {
                 email: "",
-                password: ""
+                password: "",
             },
-            errors: []
+            errors: [],
         };
     },
 
     methods: {
         login() {
             User.login(this.form)
-                .then(response => {
+                .then((response) => {
                     this.$store.commit("LOGIN", true);
                     localStorage.setItem("token", response.data);
                     this.$router.push({ name: "home" });
                 })
-                .catch(error => {
+                .catch((error) => {
                     if (error.response.status === 422) {
                         this.errors = error.response.data.errors;
                     }
                 });
-        }
-    }
+        },
+    },
 };
 </script>
 
-<style>
-
-</style>
+<style></style>
