@@ -5,7 +5,7 @@
         <div class="relative hidden xl:block xl:w-1/2 h-full">
             <img
                 class="absolute h-auto w-full object-cover"
-                src="https://images.unsplash.com/photo-1541233349642-6e425fe6190e"
+                :src="'/img/img_login.jpg'"
                 alt="my zomato"
             />
         </div>
@@ -34,9 +34,15 @@
                         class="text-sm appearance-none rounded w-full py-2 px-3 text-gray-700 bg-gray-200 leading-tight focus:outline-none focus:shadow-outline h-10"
                         id="email"
                         type="text"
-                        placeholder="Your email address"
+                        placeholder="Tu correo"
                         v-model="form.email"
                     />
+                    <span
+                        class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1"
+                        v-if="errors.email"
+                    >
+                        Email inválido!
+                    </span>
                 </div>
                 <div class="mb-6 mt-6">
                     <label
@@ -49,9 +55,15 @@
                         class="text-sm bg-gray-200 appearance-none rounded w-full py-2 px-3 text-gray-700 mb-1 leading-tight focus:outline-none focus:shadow-outline h-10"
                         id="password"
                         type="password"
-                        placeholder="Your password"
+                        placeholder="Tu contraseña"
                         v-model="form.password"
                     />
+                    <span
+                        class="flex items-center font-medium tracking-wide text-red-500 text-xs mt-1 ml-1"
+                        v-if="errors.password"
+                    >
+                        Password inválido!
+                    </span>
                 </div>
                 <div class="flex w-full mt-8">
                     <button

@@ -1,13 +1,14 @@
 <template>
     <div>
-        <the-header />
+        <the-header/>
 
         <div class="container mx-auto px-4 pt-16">
             <div class="popular-movies">
-                <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold">Películas Mejor Punteadas</h2>
+                <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold">Películas Mejor
+                    Punteadas</h2>
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
 
-                    <movie-card v-for="movie in movies.data" :key="movie.data.movie_id" :movie="movie"  />
+                    <movie-card :key="movie.data.movie_id" :movie="movie" v-for="movie in movies.data"/>
 
                 </div>
             </div>
@@ -18,29 +19,29 @@
 <script>
 import User from "../apis/User";
 import Movies from "../apis/Movies";
-import { mapState } from "vuex";
+import {mapState} from "vuex";
 import TheHeader from '../components/TheHeader';
 import MovieCard from '../components/MovieCard';
 
 export default {
     name: "Home",
 
-    components: { MovieCard, TheHeader },
+    components: {MovieCard, TheHeader},
 
     data: () => {
-      return {
-        movies: '',
-      }
+        return {
+            movies: '',
+        }
     },
 
     created() {
-      Movies.getAll()
-        .then(res => {
-          this.movies = res.data
-        })
-        .catch(error => {
-          console.log('Unable to fetch movies.');
-        });
+        Movies.getAll()
+            .then(res => {
+                this.movies = res.data
+            })
+            .catch(error => {
+                console.log(error);
+            });
     },
 
     computed: {

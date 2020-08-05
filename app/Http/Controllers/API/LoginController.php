@@ -3,9 +3,8 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\ValidationException;
 
 class LoginController extends Controller
@@ -13,23 +12,21 @@ class LoginController extends Controller
     public function login(Request $request)
     {
         $request->validate([
-            'email' => ['required', 'email'],
+            'email' => ['required'],
             'password' => ['required']
         ]);
 
-        $user = User::where('email', $request->email)->first();
-
-        if (!$user || !Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect']
-            ]);
+        if (Auth::attempt($request->only('email', 'password'))) {
+            return response()->json(Auth::user(), 200);
         }
 
-        return $user->createToken('Auth Token')->accessToken;
+        throw ValidationException::withMessages([
+            'email' => ['The provided credentials are incorrect.']
+        ]);
     }
 
     public function logout(Request $request)
     {
-        $request->user()->tokens()->delete();
+        Auth::guard('web')->logout();
     }
 }

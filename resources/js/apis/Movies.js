@@ -1,11 +1,16 @@
 import Api from "./Api";
+import Csrf from "./Csrf";
 
 export default {
-    getAll() {
-        return Api().get("/movies");
+    async getAll() {
+        await Csrf.getCookie();
+
+        return Api.get("/movies");
     },
 
-    getOne(id) {
-        return Api().get(`/movies/${id}`);
+    async getOne(id) {
+        await Csrf.getCookie();
+
+        return Api.get(`/movies/${id}`);
     }
 };
