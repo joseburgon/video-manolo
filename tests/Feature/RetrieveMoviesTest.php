@@ -6,6 +6,7 @@ use App\Movie;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class RetrieveMoviesTest extends TestCase
@@ -17,7 +18,7 @@ class RetrieveMoviesTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->actingAs($user = factory(User::class)->create(), 'api');
+        Sanctum::actingAs($user = factory(User::class)->create(), ['*']);
 
         $movies = factory(Movie::class, 2)->create()->each(function (Movie $movie) {
             $movie->genres()->attach([12, 14]);
@@ -82,7 +83,7 @@ class RetrieveMoviesTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->actingAs($user = factory(User::class)->create(), 'api');
+        Sanctum::actingAs($user = factory(User::class)->create(), ['*']);
 
         $movie = factory(Movie::class)->create();
         $movie->genres()->attach([12, 14]);

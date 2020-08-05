@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Reservation;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class ReservationsTest extends TestCase
@@ -16,7 +17,9 @@ class ReservationsTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->actingAs($user = factory(User::class)->create(), 'api');
+        $user = factory(User::class)->create();
+
+        Sanctum::actingAs($user, ['*']);
 
         $response = $this->post('/api/reservations/', [
             'data' => [
@@ -29,7 +32,7 @@ class ReservationsTest extends TestCase
         ]);
 
         $reservation = Reservation::first();
-        
+
         $this->assertCount(1, Reservation::all());
         $this->assertEquals($user->id, $reservation->user_id);
         $this->assertEquals(1, $reservation->movie_id);
@@ -54,6 +57,6 @@ class ReservationsTest extends TestCase
                         'self' => url('/reservations/' . $reservation->id),
                     ]
             ]);
-        
+
     }
 }

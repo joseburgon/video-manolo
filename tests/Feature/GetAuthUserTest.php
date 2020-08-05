@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
+use Laravel\Sanctum\Sanctum;
 use Tests\TestCase;
 
 class GetAuthUserTest extends TestCase
@@ -16,7 +17,9 @@ class GetAuthUserTest extends TestCase
     {
         $this->withoutExceptionHandling();
 
-        $this->actingAs($user = factory(User::class)->create(), 'api');
+        $user = factory(User::class)->create();
+
+        Sanctum::actingAs($user, ['*']);
 
         $response = $this->get('/api/user');
 
