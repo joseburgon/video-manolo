@@ -1,8 +1,8 @@
-<p align="center"><img src="https://drive.google.com/uc?id=1hZe3JJNVap_L15YMcIFQr89IbV8D13Om" width="100%"></p>
+<p align="center"><img src="https://drive.google.com/uc?id=1_kJMtgulIZlfYDqBwJUFvX3DYx2d4gVq" width="100%"></p>
 
 # VideoManolo
 
-Live App URL: https://video-manolo.herokuapp.com/
+Live App on Heroku: https://video-manolo.herokuapp.com/
 
 Movie info from: https://www.themoviedb.org/
 

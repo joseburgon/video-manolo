@@ -13,18 +13,18 @@ class MoviesTableSeeder extends Seeder
      */
     public function run()
     {
-        $topRatedMovies = [];
+        $popularMovies = [];
 
         $apiRepo = new TmdbApi();
 
         for ($page = 1; $page < 4; $page++) {
 
-            $results = $apiRepo->getTopRated($page);
-            $topRatedMovies = array_merge($topRatedMovies, $results);
+            $results = $apiRepo->getPopular($page);
+            $popularMovies = array_merge($popularMovies, $results);
 
         }
 
-        foreach ($topRatedMovies as $movie) {
+        foreach ($popularMovies as $movie) {
 
             $newMovie = Movie::create([
                 'id' => $movie['id'],

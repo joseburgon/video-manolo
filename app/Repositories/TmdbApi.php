@@ -34,4 +34,19 @@ class TmdbApi
             return $response->json()['results'];
         }
     }
+
+    public function getPopular($page)
+    {
+        if (isset($page)) {
+            $this->params['page'] = $page;
+        }
+
+        $response = Http::get($this->baseUrl . 'movie/popular', $this->params)
+            ->throw();
+
+        if ($response->successful()) {
+
+            return $response->json()['results'];
+        }
+    }
 }
