@@ -29,6 +29,17 @@
           </div>
 
           <p class="text-gray-300 mt-8">{{ movie.data.attributes.overview }}</p>
+
+          <div class="mt-12">
+            <h4 class="text-white font-semibold">Featured Crew</h4>
+            <div class="flex mt-4">
+              <div class="mr-8" v-for="member in crew" :key="member.credit_id">
+                <div>{{ member.name }}</div>
+                <div class="text-sm text-gray-400">{{ member.job }}</div>
+              </div>
+            </div>
+          </div>
+
           <div class="mt-12 flex">
             <div
               class="flex inline-flex items-center bg-gray-700 text-white rounded font-semibold px-5 py-4 opacity-50"
@@ -87,12 +98,35 @@
         </div>
       </div>
     </div>
+
+    <!-- end movie-info -->
+
+    <div class="movie-cast border-b border-gray-800">
+      <div class="container mx-auto px-4 py-16">
+        <h2 class="text-4xl font-semibold">Cast</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
+          <div class="mt-8" v-for="actor in cast" :key="actor.cast_id">
+            <img
+              :src="`https://image.tmdb.org/t/p/w500${actor.profile_path}`"
+              alt="actor pic"
+              class="hover:opacity-75 transition ease-in-out duration-150"
+            />
+            <div class="mt-2">
+              <div class="text-lg mt-2 hover:text-gray:300">{{ actor.name }}</div>
+              <div class="text-sm text-gray-400">{{ actor.character }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end movie-cast -->
   </div>
 </template>
 
 <script>
 import User from "../apis/User";
 import Movies from "../apis/Movies";
+import Tmdb from "../apis/Tmdb";
 import Reservation from "../apis/Reservation";
 import { mapState } from "vuex";
 import TheHeader from "../components/TheHeader";
@@ -107,6 +141,8 @@ export default {
       genres: "",
       imgUrl: "https://image.tmdb.org/t/p/w500",
       stock: 0,
+      crew: {},
+      cast: {},
       reserved: false,
       form: {
         return_date: "",
@@ -147,6 +183,18 @@ export default {
           console.log(error);
         });
     },
+
+    getMovieCast(movie) {
+      Tmdb.getMovieCredits(this.movie.data.movie_id)
+        .then((res) => {
+          console.log(res);
+          this.crew = res.crew.slice(0, 3);
+          this.cast = res.cast.slice(0, 5);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    },
   },
 
   created() {
@@ -167,6 +215,7 @@ export default {
         });
 
         this.checkUserHasMovie(this.movie.data.movie_id);
+        this.getMovieCast(this.movie.data.movie_id);
       })
       .catch((error) => {
         console.log("Unable to fetch movie.");

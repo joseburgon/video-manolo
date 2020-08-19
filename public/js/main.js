@@ -2322,10 +2322,11 @@ __webpack_require__.r(__webpack_exports__);
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _apis_User__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ../apis/User */ "./resources/js/apis/User.js");
 /* harmony import */ var _apis_Movies__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../apis/Movies */ "./resources/js/apis/Movies.js");
-/* harmony import */ var _apis_Reservation__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../apis/Reservation */ "./resources/js/apis/Reservation.js");
-/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
-/* harmony import */ var _components_TheHeader__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ../components/TheHeader */ "./resources/js/components/TheHeader.vue");
-/* harmony import */ var vue_tailwind_picker__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! vue-tailwind-picker */ "./node_modules/vue-tailwind-picker/dist/vue-tailwind-picker.esm.js");
+/* harmony import */ var _apis_Tmdb__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../apis/Tmdb */ "./resources/js/apis/Tmdb.js");
+/* harmony import */ var _apis_Reservation__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ../apis/Reservation */ "./resources/js/apis/Reservation.js");
+/* harmony import */ var vuex__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! vuex */ "./node_modules/vuex/dist/vuex.esm.js");
+/* harmony import */ var _components_TheHeader__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ../components/TheHeader */ "./resources/js/components/TheHeader.vue");
+/* harmony import */ var vue_tailwind_picker__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! vue-tailwind-picker */ "./node_modules/vue-tailwind-picker/dist/vue-tailwind-picker.esm.js");
 //
 //
 //
@@ -2418,6 +2419,40 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
 
 
 
@@ -2432,6 +2467,8 @@ __webpack_require__.r(__webpack_exports__);
       genres: "",
       imgUrl: "https://image.tmdb.org/t/p/w500",
       stock: 0,
+      crew: {},
+      cast: {},
       reserved: false,
       form: {
         return_date: "",
@@ -2441,15 +2478,15 @@ __webpack_require__.r(__webpack_exports__);
     };
   },
   components: {
-    TheHeader: _components_TheHeader__WEBPACK_IMPORTED_MODULE_4__["default"],
-    VueTailwindPicker: vue_tailwind_picker__WEBPACK_IMPORTED_MODULE_5__["default"]
+    TheHeader: _components_TheHeader__WEBPACK_IMPORTED_MODULE_5__["default"],
+    VueTailwindPicker: vue_tailwind_picker__WEBPACK_IMPORTED_MODULE_6__["default"]
   },
   methods: {
     reserve: function reserve() {
       var _this = this;
 
       this.errors = [];
-      _apis_Reservation__WEBPACK_IMPORTED_MODULE_2__["default"].store(this.form).then(function (res) {
+      _apis_Reservation__WEBPACK_IMPORTED_MODULE_3__["default"].store(this.form).then(function (res) {
         console.log(res.data);
         _this.stock--;
         _this.reserved = true;
@@ -2464,33 +2501,46 @@ __webpack_require__.r(__webpack_exports__);
     checkUserHasMovie: function checkUserHasMovie(movie) {
       var _this2 = this;
 
-      _apis_Reservation__WEBPACK_IMPORTED_MODULE_2__["default"].checkUserHasMovie(movie).then(function (res) {
+      _apis_Reservation__WEBPACK_IMPORTED_MODULE_3__["default"].checkUserHasMovie(movie).then(function (res) {
         console.log("User has movie? ".concat(res.data.result));
         _this2.reserved = res.data.result;
         _this2.form.return_date = res.data.reservation.return_date;
       })["catch"](function (error) {
         console.log(error);
       });
+    },
+    getMovieCast: function getMovieCast(movie) {
+      var _this3 = this;
+
+      _apis_Tmdb__WEBPACK_IMPORTED_MODULE_2__["default"].getMovieCredits(this.movie.data.movie_id).then(function (res) {
+        console.log(res);
+        _this3.crew = res.crew.slice(0, 3);
+        _this3.cast = res.cast.slice(0, 5);
+      })["catch"](function (error) {
+        console.log(error);
+      });
     }
   },
   created: function created() {
-    var _this3 = this;
+    var _this4 = this;
 
     _apis_Movies__WEBPACK_IMPORTED_MODULE_1__["default"].getOne(this.$route.params.id).then(function (res) {
-      _this3.movie = res.data;
-      _this3.form.movie_id = _this3.movie.data.movie_id;
-      _this3.stock += _this3.movie.data.attributes.stock;
-      _this3.imgUrl += _this3.movie.data.attributes.poster_path;
+      _this4.movie = res.data;
+      _this4.form.movie_id = _this4.movie.data.movie_id;
+      _this4.stock += _this4.movie.data.attributes.stock;
+      _this4.imgUrl += _this4.movie.data.attributes.poster_path;
 
-      _this3.movie.data.attributes.genres.forEach(function (genre) {
-        if (_this3.genres === "") {
-          _this3.genres += genre.name;
+      _this4.movie.data.attributes.genres.forEach(function (genre) {
+        if (_this4.genres === "") {
+          _this4.genres += genre.name;
         } else {
-          _this3.genres += ", " + genre.name;
+          _this4.genres += ", " + genre.name;
         }
       });
 
-      _this3.checkUserHasMovie(_this3.movie.data.movie_id);
+      _this4.checkUserHasMovie(_this4.movie.data.movie_id);
+
+      _this4.getMovieCast(_this4.movie.data.movie_id);
     })["catch"](function (error) {
       console.log("Unable to fetch movie.");
     });
@@ -39972,6 +40022,33 @@ var render = function() {
                     _vm._v(_vm._s(_vm.movie.data.attributes.overview))
                   ]),
                   _vm._v(" "),
+                  _c("div", { staticClass: "mt-12" }, [
+                    _c("h4", { staticClass: "text-white font-semibold" }, [
+                      _vm._v("Featured Crew")
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "div",
+                      { staticClass: "flex mt-4" },
+                      _vm._l(_vm.crew, function(member) {
+                        return _c(
+                          "div",
+                          { key: member.credit_id, staticClass: "mr-8" },
+                          [
+                            _c("div", [_vm._v(_vm._s(member.name))]),
+                            _vm._v(" "),
+                            _c(
+                              "div",
+                              { staticClass: "text-sm text-gray-400" },
+                              [_vm._v(_vm._s(member.job))]
+                            )
+                          ]
+                        )
+                      }),
+                      0
+                    )
+                  ]),
+                  _vm._v(" "),
                   _c("div", { staticClass: "mt-12 flex" }, [
                     _c(
                       "div",
@@ -40133,7 +40210,46 @@ var render = function() {
               ]
             )
           ])
-        : _vm._e()
+        : _vm._e(),
+      _vm._v(" "),
+      _c("div", { staticClass: "movie-cast border-b border-gray-800" }, [
+        _c("div", { staticClass: "container mx-auto px-4 py-16" }, [
+          _c("h2", { staticClass: "text-4xl font-semibold" }, [_vm._v("Cast")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            {
+              staticClass:
+                "grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8"
+            },
+            _vm._l(_vm.cast, function(actor) {
+              return _c("div", { key: actor.cast_id, staticClass: "mt-8" }, [
+                _c("img", {
+                  staticClass:
+                    "hover:opacity-75 transition ease-in-out duration-150",
+                  attrs: {
+                    src: "https://image.tmdb.org/t/p/w500" + actor.profile_path,
+                    alt: "actor pic"
+                  }
+                }),
+                _vm._v(" "),
+                _c("div", { staticClass: "mt-2" }, [
+                  _c(
+                    "div",
+                    { staticClass: "text-lg mt-2 hover:text-gray:300" },
+                    [_vm._v(_vm._s(actor.name))]
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "text-sm text-gray-400" }, [
+                    _vm._v(_vm._s(actor.character))
+                  ])
+                ])
+              ])
+            }),
+            0
+          )
+        ])
+      ])
     ],
     1
   )
@@ -58859,6 +58975,52 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }
       }, _callee2);
+    }))();
+  }
+});
+
+/***/ }),
+
+/***/ "./resources/js/apis/Tmdb.js":
+/*!***********************************!*\
+  !*** ./resources/js/apis/Tmdb.js ***!
+  \***********************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! @babel/runtime/regenerator */ "./node_modules/@babel/runtime/regenerator/index.js");
+/* harmony import */ var _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0__);
+
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
+
+var baseUrl = 'https://api.themoviedb.org/3';
+var apiKey = '2d42e69235a69efaa787770f43e31ddd';
+/* harmony default export */ __webpack_exports__["default"] = ({
+  getMovieCredits: function getMovieCredits(movie_id) {
+    return _asyncToGenerator( /*#__PURE__*/_babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.mark(function _callee() {
+      return _babel_runtime_regenerator__WEBPACK_IMPORTED_MODULE_0___default.a.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              return _context.abrupt("return", axios.get("".concat(baseUrl, "/movie/").concat(movie_id, "/credits"), {
+                params: {
+                  api_key: apiKey
+                }
+              }).then(function (res) {
+                return res.data;
+              }));
+
+            case 1:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
     }))();
   }
 });
