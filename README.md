@@ -1,4 +1,4 @@
-<p align="center"><img src="https://drive.google.com/uc?id=1ys5ERK1NYEKfjYS-KgyWkSZmmfuHcwcA" width="600"></p>
+<p align="center"><img src="https://drive.google.com/uc?id=1hZe3JJNVap_L15YMcIFQr89IbV8D13Om" width="100%"></p>
 
 # VideoManolo
 
@@ -16,13 +16,13 @@ If it's Windows we highly recommend using [Laragon](https://laragon.org/) as a l
 git clone https://github.com/joseburgon/video-manolo.git
 ```
 
-# Step 2: Switch to the repo folder
+### Step 2: Switch to the repo folder
 
 ```
 cd video-manolo
 ```
 
-# Step 3: Install project packages and dependencies
+### Step 3: Install project packages and dependencies
 
 ```
 composer install
@@ -32,7 +32,7 @@ composer install
 npm install
 ```
 
-# Step 4: Create .env file
+### Step 4: Create .env file
 
 The .env file is generally not loaded, due to security issues. The easiest way to do this is to copy the .env.example file to .env, and modify the latter:
 
@@ -40,7 +40,7 @@ The .env file is generally not loaded, due to security issues. The easiest way t
 copy .env.example .env
 ```
 
-# Step 5: Generate project key
+### Step 5: Generate project key
 
 Laravel requires an encryption key for each project.
 
@@ -48,17 +48,17 @@ Laravel requires an encryption key for each project.
 php artisan key:generate
 ```
 
-# Step 6: Create database
+### Step 6: Create database
 
 Laravel is configured to use mySQL by default, not only the driver, server, database, user and password must be changed, but also the port, mySQL uses 3306 and postgres 5432.
 
-# Step 7: Migrate and seed the database
+### Step 7: Migrate and seed the database
 
 ```
 php artisan migrate --seed
 ```
 
-# Step 8: Start the local development server
+### Step 8: Start the local development server
 
 ```
 php artisan serve
