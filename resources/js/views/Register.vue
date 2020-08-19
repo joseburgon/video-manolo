@@ -1,5 +1,5 @@
 <template>
-  <div class="container max-w-full mx-auto md:py-24 px-6">
+  <div class="container max-w-full mx-auto md:py-10 px-6">
     <div class="max-w-sm mx-auto">
       <div class="relative flex flex-wrap">
         <div class="w-full relative">
