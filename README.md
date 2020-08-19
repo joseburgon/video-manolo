@@ -69,3 +69,6 @@ php artisan serve
 You can now access the server at http://localhost:8000.
 
 Or http://vensure-benefit-portal.test/ if you use [Valet](https://laravel.com/docs/7.x/valet) on Mac or [Laragon](https://laragon.org/) on Windows.
+
+*Email: test@mail.com
+Password: password*
