@@ -17,8 +17,8 @@ class MoviesTableSeeder extends Seeder
 
         $apiRepo = new TmdbApi();
 
-        for ($page = 1; $page < 4; $page++) { 
-            
+        for ($page = 1; $page < 4; $page++) {
+
             $results = $apiRepo->getTopRated($page);
             $topRatedMovies = array_merge($topRatedMovies, $results);
 
@@ -28,7 +28,7 @@ class MoviesTableSeeder extends Seeder
 
             $newMovie = Movie::create([
                 'id' => $movie['id'],
-                'popularity' => $movie['popularity'],
+                'popularity' => intval($movie['popularity']),
                 'vote_count' => $movie['vote_count'],
                 'poster_path' => $movie['poster_path'],
                 'adult' => $movie['adult'],
@@ -41,7 +41,7 @@ class MoviesTableSeeder extends Seeder
                 'release_date' => $movie['release_date'],
                 'stock' => rand(0, 5),
             ]);
-            
+
             $newMovie->genres()->attach($movie['genre_ids']);
 
         }
