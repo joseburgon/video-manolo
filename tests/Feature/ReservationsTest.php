@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Movie;
 use App\Reservation;
 use App\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -19,14 +20,16 @@ class ReservationsTest extends TestCase
 
         $user = factory(User::class)->create();
 
+        $movie = factory(Movie::class)->create();
+
         Sanctum::actingAs($user, ['*']);
 
         $response = $this->post('/api/reservations/', [
             'data' => [
                 'type' => 'reservations',
                 'attributes' => [
-                    'movie_id' => 1,
-                    'return_date' => '2020-08-15'
+                    'movie_id' => $movie->id,
+                    'return_date' => '2020-10-15'
                 ]
             ]
         ]);
@@ -58,5 +61,32 @@ class ReservationsTest extends TestCase
                     ]
             ]);
 
+    }
+
+    /** @test */
+    public function a_user_can_not_reserve_an_unavailable_movie()
+    {
+        $this->withoutExceptionHandling();
+
+        $user = factory(User::class)->create();
+
+        $movie = Movie::create([
+            'title' => 'Test Movie',
+            'stock' => 0
+        ]);
+
+        Sanctum::actingAs($user, ['*']);
+
+        $response = $this->post('/api/reservations/', [
+            'data' => [
+                'type' => 'reservations',
+                'attributes' => [
+                    'movie_id' => $movie->id,
+                    'return_date' => '2020-10-30'
+                ]
+            ]
+        ]);
+
+        $response->assertStatus(403);
     }
 }

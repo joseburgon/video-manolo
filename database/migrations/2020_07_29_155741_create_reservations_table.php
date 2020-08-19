@@ -18,6 +18,7 @@ class CreateReservationsTable extends Migration
 
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('movie_id');
+            $table->string('status', 50)->default('OPEN');
             $table->date('return_date');
 
             $table->timestamps();
