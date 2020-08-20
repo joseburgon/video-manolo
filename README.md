@@ -2,7 +2,9 @@
 
 # VideoManolo
 
-Live App on Heroku: https://video-manolo.herokuapp.com/
+Live App on Netlify: https://videomanolo.joseburgon.com/
+
+Backend / API running on Heroku: https://api.joseburgon.com 
 
 Movie info from: https://www.themoviedb.org/
 
