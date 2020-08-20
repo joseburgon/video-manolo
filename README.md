@@ -28,10 +28,6 @@ cd video-manolo
 composer install
 ```
 
-```
-npm install
-```
-
 ### Step 4: Create .env file
 
 The .env file is generally not loaded, due to security issues. The easiest way to do this is to copy the .env.example file to .env, and modify the latter:
