@@ -9,6 +9,14 @@ class Reservation extends Model
 {
     protected $guarded = [];
 
+    protected $dates = [
+        'return_date',
+    ];
+
+    protected $casts = [
+        'return_date' => 'datetime:Y-m-d',
+    ];
+
     protected static function boot()
     {
         parent::boot();
@@ -20,7 +28,7 @@ class Reservation extends Model
     {
         return $this->belongsTo(User::class);
     }
-    
+
     public function movie()
     {
         return $this->belongsTo(Movie::class);
